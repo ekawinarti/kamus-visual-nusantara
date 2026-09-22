@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamus Visual Nusantara & Smart Quiz - Eka Winarti, S.Pd., Gr.</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #2563eb 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #93c5fd;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+        .active-nav-link {
+            background-color: rgba(255, 255, 255, 0.15);
+            font-weight: 600;
+            border-bottom: 2px solid #ffffff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden antialiased bg-slate-50">
+    <!-- Top Announcement Banner -->
+    <div class="bg-brand-950 text-brand-100 text-xs py-2 px-4 border-b border-brand-800/50">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+            <div class="flex items-center gap-2">
+                <span class="bg-brand-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Aplikasi Pembelajaran IPS</span>
+                <span>SMP Swasta Eka Edukasi Cahaya</span>
+            </div>
+            <div class="flex items-center gap-2 text-brand-200">
+                <i class="fa-solid fa-graduation-cap text-brand-400"></i>
+                <span>Media Interaktif & Evaluasi IPS SMP</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-brand-900 text-white shadow-lg backdrop-blur-md bg-opacity-95 border-b border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo & Title -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-500 to-blue-300 flex items-center justify-center text-white shadow-md text-2xl font-black">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-black tracking-tight leading-tight flex items-center gap-2">
+                            <span>KAMUS VISUAL NUSANTARA</span>
+                            <span class="text-xs bg-amber-400 text-brand-950 font-bold px-2 py-0.5 rounded-md uppercase">Smart Quiz</span>
+                        </h1>
+                        <p class="text-xs text-brand-200 hidden sm:block">Media Interaktif Visual & Evaluasi IPS SMP</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                    <button onclick="navigateTo('home')" id="nav-home" class="px-3 py-2 rounded-lg transition-all hover:bg-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> Beranda
+                    </button>
+                    <button onclick="navigateTo('kamus')" id="nav-kamus" class="px-3 py-2 rounded-lg transition-all hover:bg-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark"></i> Kamus Visual
+                    </button>
+                    <button onclick="navigateTo('quiz')" id="nav-quiz" class="px-3 py-2 rounded-lg transition-all hover:bg-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad"></i> Smart Quiz
+                    </button>
+                    <button onclick="navigateTo('guru')" id="nav-guru" class="px-3 py-2 rounded-lg transition-all hover:bg-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line"></i> Dashboard Guru
+                    </button>
+                    <button onclick="navigateTo('admin')" id="nav-admin" class="px-3 py-2 rounded-lg transition-all hover:bg-brand-800 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield"></i> Kelola Data
+                    </button>
+                </nav>
+
+                <!-- Right Actions: Role Switcher & Mobile Menu Trigger -->
+                <div class="flex items-center gap-3">
+                    <div class="relative hidden sm:block">
+                        <select id="role-selector" onchange="changeRole(this.value)" class="bg-brand-950 border border-brand-700 text-white text-xs rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-400 outline-none cursor-pointer">
+                            <option value="siswa">👤 Peran: Siswa / Tamu</option>
+                            <option value="guru">👨‍🏫 Peran: Guru IPS</option>
+                            <option value="admin">⚡ Peran: Admin Konten</option>
+                        </select>
+                    </div>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2 text-2xl hover:bg-brand-800 rounded-lg">
+                        <i class="fa-solid fa-bars" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-950 border-t border-brand-800 px-4 pt-3 pb-6 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm text-brand-100 hover:bg-brand-800 flex items-center gap-3">
+                <i class="fa-solid fa-house w-5"></i> Beranda
+            </button>
+            <button onclick="navigateTo('kamus'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm text-brand-100 hover:bg-brand-800 flex items-center gap-3">
+                <i class="fa-solid fa-book-bookmark w-5"></i> Kamus Visual Nusantara
+            </button>
+            <button onclick="navigateTo('quiz'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm text-brand-100 hover:bg-brand-800 flex items-center gap-3">
+                <i class="fa-solid fa-gamepad w-5"></i> Smart Quiz Evaluasi
+            </button>
+            <button onclick="navigateTo('guru'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm text-brand-100 hover:bg-brand-800 flex items-center gap-3">
+                <i class="fa-solid fa-chart-line w-5"></i> Dashboard Guru IPS
+            </button>
+            <button onclick="navigateTo('admin'); toggleMobileMenu();" class="w-full text-left px-4 py-2.5 rounded-lg text-sm text-brand-100 hover:bg-brand-800 flex items-center gap-3">
+                <i class="fa-solid fa-user-shield w-5"></i> Kelola Data & Soal
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main id="main-container" class="flex-grow">
+        <!-- VIEW: HOME / BERANDA -->
+        <section id="view-home" class="view-section">
+            <!-- Hero Section -->
+            <div class="hero-gradient text-white relative overflow-hidden py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-blue-100 text-xs font-semibold px-4 py-2 rounded-full">
+                                <i class="fa-solid fa-award text-amber-300"></i>
+                                <span>Inovasi Pembelajaran IPS SMP Terpadu</span>
+                            </div>
+                            <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                                Jelajahi Kekayaan Nusantara Melalui <span class="text-amber-300 underline decoration-amber-400 decoration-wavy">Visual & Smart Quiz</span>
+                            </h1>
+                            <p class="text-lg text-blue-100 max-w-2xl font-light leading-relaxed">
+                                Membantu siswa SMP memahami istilah Geografi, Sejarah, Kebudayaan Nusantara, Ekonomi, dan Sosio-Budaya secara visual interaktif disertai evaluasi Pre-Test & Post-Test terintegrasi.
+                            </p>
+                            
+                            <!-- Call To Actions -->
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                                <button onclick="navigateTo('kamus')" class="bg-amber-400 hover:bg-amber-300 text-brand-950 font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all hover:scale-105 flex items-center gap-3">
+                                    <i class="fa-solid fa-search text-lg"></i>
+                                    <span>Cari Kosakata IPS</span>
+                                </button>
+                                <button onclick="navigateTo('quiz')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-7 py-3.5 rounded-xl border border-white/30 backdrop-blur-md transition-all hover:scale-105 flex items-center gap-3">
+                                    <i class="fa-solid fa-play text-amber-300 text-lg"></i>
+                                    <span>Mulai Smart Quiz</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hero Graphic Illustration Card -->
+                        <div class="lg:col-span-5 flex justify-center">
+                            <div class="w-full max-w-md bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border border-blue-100">
+                                <div class="relative rounded-2xl overflow-hidden h-52 mb-4">
+                                    <img src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80&w=800" alt="Candi Borobudur" class="w-full h-full object-cover">
+                                    <span class="absolute top-3 left-3 bg-brand-900/90 text-amber-300 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm">
+                                        Kebudayaan Nusantara
+                                    </span>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <h3 class="font-black text-xl text-brand-900">Candi Borobudur</h3>
+                                        <button onclick="speakText('Candi Borobudur - Monumen Buddha terbesar di dunia yang dibangun pada masa dinasti Syailendra')" class="text-brand-600 hover:text-brand-800 p-2 bg-brand-50 rounded-lg">
+                                            <i class="fa-solid fa-volume-high text-lg"></i>
+                                        </button>
+                                    </div>
+                                    <p class="text-xs text-slate-600 line-clamp-2">
+                                        Monumen Buddha terbesar di dunia yang terletak di Magelang, Jawa Tengah. Mahakarya arsitektur sejarah Nusantara masa Dinasti Syailendra.
+                                    </p>
+                                    <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-500">
+                                        <span class="flex items-center gap-1"><i class="fa-solid fa-tags text-brand-500"></i> Sejarah & Artefak</span>
+                                        <span class="text-brand-600 font-semibold cursor-pointer" onclick="navigateTo('kamus')">Pelajari Lengkap &rarr;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Realtime Statistics Counters -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-slate-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-blue-100 text-brand-700 flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-slate-800" id="stat-kosakata">0</p>
+                            <p class="text-xs text-slate-500 font-medium">Kosakata IPS Nusantara</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-slate-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-slate-800" id="stat-kategori">6</p>
+                            <p class="text-xs text-slate-500 font-medium">Kategori Pembelajaran</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-slate-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-clipboard-question"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-slate-800" id="stat-soal">30</p>
+                            <p class="text-xs text-slate-500 font-medium">Soal Pre & Post Test</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-slate-100 flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-black text-slate-800">SMP</p>
+                            <p class="text-xs text-slate-500 font-medium">Eka Edukasi Cahaya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Showcase Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-black text-brand-900 tracking-tight">Kategori Utama IPS Nusantara</h2>
+                    <p class="text-slate-600 text-sm mt-2">Didesain khusus untuk kurikulum IPS SMP dengan pemetaan materi yang komprehensif</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div onclick="filterKamusCategory('Geografi')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-blue-50 text-brand-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-earth-asia"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">Geografi</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Peta, Iklim, Bentang Alam</p>
+                    </div>
+                    <div onclick="filterKamusCategory('Sejarah')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-monument"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">Sejarah</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Kerajaan, Peristiwa, Tokoh</p>
+                    </div>
+                    <div onclick="filterKamusCategory('Kebudayaan Nusantara')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-masks-theater"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">Kebudayaan</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Adat, Rumah, Tarian</p>
+                    </div>
+                    <div onclick="filterKamusCategory('Ekonomi')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">Ekonomi</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Pasar, Barter, Inflasi</p>
+                    </div>
+                    <div onclick="filterKamusCategory('Sosio-Budaya')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">Sosio-Budaya</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Interaksi, Asimilasi</p>
+                    </div>
+                    <div onclick="filterKamusCategory('Umum')" class="bg-white rounded-2xl p-5 text-center shadow-md border border-slate-100 hover:shadow-xl hover:border-brand-300 transition-all cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm mt-3">IPS Umum</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">Istilah Konseptual</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Quiz CTA Banner -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+                <div class="bg-gradient-to-r from-brand-900 via-brand-800 to-blue-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-4 max-w-2xl text-center md:text-left">
+                        <span class="bg-amber-400 text-brand-950 font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+                            Fitur Evaluasi Pre-Test & Post-Test
+                        </span>
+                        <h3 class="text-2xl sm:text-4xl font-black">Siap Menguji Pemahaman IPS Anda Hari Ini?</h3>
+                        <p class="text-brand-100 text-sm sm:text-base">
+                            Masuk ke Mode Smart Quiz untuk melakukan Latihan Mandiri atau ikuti Pre-Test dan Post-Test resmi dengan 15 Bank Soal terstandar.
+                        </p>
+                    </div>
+                    <button onclick="navigateTo('quiz')" class="bg-white text-brand-900 font-extrabold px-8 py-4 rounded-xl shadow-xl hover:bg-amber-300 hover:text-brand-950 transition-all whitespace-nowrap text-base flex items-center gap-3">
+                        <i class="fa-solid fa-circle-play text-xl"></i>
+                        <span>Buka Smart Quiz Engine</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: KAMUS VISUAL NUSANTARA -->
+        <section id="view-kamus" class="view-section hidden">
+            <div class="bg-brand-900 text-white py-12 border-b border-brand-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-black flex items-center gap-3">
+                                <i class="fa-solid fa-book-bookmark text-amber-300"></i>
+                                Kamus Visual Nusantara
+                            </h2>
+                            <p class="text-brand-200 text-sm mt-1">Eksplorasi istilah IPS Nusantara lengkap dengan visual, pelafalan audio, dan contoh konteks</p>
+                        </div>
+                        
+                        <!-- Search Box -->
+                        <div class="w-full md:w-96 relative">
+                            <input type="text" id="kamus-search" oninput="renderKamusGrid()" placeholder="Cari kosakata, misal: Subak, Barter, Megalitikum..." class="w-full bg-brand-950/80 border border-brand-700 text-white placeholder-brand-300 text-sm rounded-xl pl-11 pr-10 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                            <i class="fa-solid fa-search absolute left-4 top-3.5 text-brand-300"></i>
+                            <button onclick="clearKamusSearch()" class="absolute right-3 top-3 text-brand-400 hover:text-white">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter Pills -->
+                    <div class="flex items-center gap-2 overflow-x-auto py-4 mt-6 custom-scrollbar text-xs font-semibold">
+                        <button onclick="setCategoryFilter('ALL')" id="cat-pill-ALL" class="cat-pill bg-amber-400 text-brand-950 px-4 py-2 rounded-xl whitespace-nowrap shadow-sm font-bold">Semua Kategori</button>
+                        <button onclick="setCategoryFilter('Geografi')" id="cat-pill-Geografi" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Geografi</button>
+                        <button onclick="setCategoryFilter('Sejarah')" id="cat-pill-Sejarah" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Sejarah</button>
+                        <button onclick="setCategoryFilter('Kebudayaan Nusantara')" id="cat-pill-Kebudayaan Nusantara" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Kebudayaan Nusantara</button>
+                        <button onclick="setCategoryFilter('Ekonomi')" id="cat-pill-Ekonomi" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Ekonomi</button>
+                        <button onclick="setCategoryFilter('Sosio-Budaya')" id="cat-pill-Sosio-Budaya" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Sosio-Budaya</button>
+                        <button onclick="setCategoryFilter('Umum')" id="cat-pill-Umum" class="cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap">Umum IPS</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vocabulary Cards Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="flex items-center justify-between mb-6">
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider" id="kamus-count-info">Menampilkan 0 Kata</p>
+                    <div class="flex items-center gap-2 text-xs">
+                        <label class="text-slate-500">Urutkan:</label>
+                        <select id="kamus-sort" onchange="renderKamusGrid()" class="bg-white border border-slate-200 text-slate-700 rounded-lg px-2 py-1 outline-none">
+                            <option value="az">A ke Z</option>
+                            <option value="za">Z ke A</option>
+                            <option value="newest">Terbaru</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Grid Container -->
+                <div id="kamus-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Dynamic Dictionary Cards injected here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="kamus-empty" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200">
+                    <i class="fa-solid fa-book-open-reader text-5xl text-brand-300 mb-4"></i>
+                    <h3 class="text-lg font-bold text-slate-800">Tidak ada kosakata yang cocok</h3>
+                    <p class="text-xs text-slate-500 mt-1">Coba gunakan kata kunci pencarian lain atau pilih kategori lain.</p>
+                    <button onclick="resetKamusFilters()" class="mt-4 bg-brand-600 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-brand-700">Reset Semua Filter</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: SMART QUIZ ENGINE -->
+        <section id="view-quiz" class="view-section hidden">
+            <div class="bg-brand-900 text-white py-10 border-b border-brand-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black flex items-center gap-3">
+                            <i class="fa-solid fa-gamepad text-amber-300"></i>
+                            Smart Quiz Engine
+                        </h2>
+                        <p class="text-brand-200 text-sm mt-1">Modul Evaluasi Interaktif: Latihan Mandiri & Ujian Pre-Test / Post-Test (15 Soal Valid)</p>
+                    </div>
+                    
+                    <div id="quiz-header-badge" class="bg-brand-800 px-4 py-2 rounded-xl text-xs flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="font-bold text-amber-300">Bank 30 Soal IPS Siap</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <!-- QUIZ MODE SELECTOR SCREEN -->
+                <div id="quiz-mode-selector" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Mode Latihan Mandiri -->
+                    <div class="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 flex flex-col justify-between hover:border-brand-400 transition-all">
+                        <div class="space-y-4">
+                            <div class="w-16 h-16 rounded-2xl bg-blue-100 text-brand-600 flex items-center justify-center text-3xl font-black">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-brand-900">1. Mode Latihan Mandiri</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Latihan bebas tanpa batasan waktu kaku. Bebas memilih kategori IPS, mendapatkan pembahasan jawaban instan setelah menjawab, dan dapat diulang kapan saja.
+                            </p>
+                            <div class="space-y-3 pt-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Pilih Kategori Kuis:</label>
+                                    <select id="practice-category" class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl p-3 font-semibold text-slate-700 outline-none focus:border-brand-500">
+                                        <option value="ALL">Semua Kategori IPS</option>
+                                        <option value="Geografi">Geografi Nusantara</option>
+                                        <option value="Sejarah">Sejarah Kebangsaan</option>
+                                        <option value="Kebudayaan Nusantara">Kebudayaan Tradisional</option>
+                                        <option value="Ekonomi">Ekonomi & Perdagangan</option>
+                                        <option value="Sosio-Budaya">Sosiologi & Masyarakat</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Jumlah Soal:</label>
+                                    <select id="practice-count" class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl p-3 font-semibold text-slate-700 outline-none focus:border-brand-500">
+                                        <option value="5">5 Soal Ringkas</option>
+                                        <option value="10" selected>10 Soal Standar</option>
+                                        <option value="15">15 Soal Lengkap</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="startPracticeQuiz()" class="mt-8 w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                            <span>Mulai Latihan Mandiri</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Mode Evaluasi Sekolah (Pre/Post Test) -->
+                    <div class="bg-gradient-to-br from-brand-900 to-blue-950 text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between relative overflow-hidden">
+                        <div class="space-y-4 relative z-10">
+                            <div class="w-16 h-16 rounded-2xl bg-amber-400 text-brand-950 flex items-center justify-center text-3xl font-black">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                            <h3 class="text-xl font-black">2. Mode Ujian Evaluasi (Pre / Post)</h3>
+                            <p class="text-xs text-brand-200 leading-relaxed">
+                                Mode Ujian Terstruktur untuk Pre-Test (15 Soal Awal) dan Post-Test (15 Soal Akhir) dengan perekaman skor langsung ke Dashboard Guru.
+                            </p>
+                            <div class="space-y-3 pt-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-brand-200 mb-1">Pilih Sesi Evaluasi:</label>
+                                    <select id="eval-test-type" class="w-full bg-brand-950/80 border border-brand-700 text-amber-300 font-bold text-xs rounded-xl p-3 outline-none focus:border-amber-400">
+                                        <option value="PRE">PRE-TEST IPS (15 Soal Penjajakan)</option>
+                                        <option value="POST">POST-TEST IPS (15 Soal Evaluasi Akhir)</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-xs font-bold text-brand-200 mb-1">Nama Siswa:</label>
+                                        <input type="text" id="eval-student-name" placeholder="Nama Lengkap" class="w-full bg-brand-950/80 border border-brand-700 text-white text-xs rounded-xl p-2.5 outline-none focus:border-amber-400">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-brand-200 mb-1">NIS / Kelas:</label>
+                                        <input type="text" id="eval-student-nis" placeholder="1234 / VII-A" class="w-full bg-brand-950/80 border border-brand-700 text-white text-xs rounded-xl p-2.5 outline-none focus:border-amber-400">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="startEvaluationQuiz()" class="mt-8 w-full bg-amber-400 hover:bg-amber-300 text-brand-950 font-extrabold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 relative z-10">
+                            <i class="fa-solid fa-key"></i>
+                            <span>Masuk Sesi Ujian (15 Soal)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ACTIVE QUIZ ENGINE RUNNER (Hidden initially) -->
+                <div id="quiz-runner" class="hidden max-w-3xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+                    <!-- Quiz Progress Header -->
+                    <div class="bg-brand-900 text-white p-6 border-b border-brand-800 flex items-center justify-between">
+                        <div>
+                            <span id="quiz-type-tag" class="bg-amber-400 text-brand-950 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">MODE LATIHAN</span>
+                            <h4 id="quiz-running-title" class="font-bold text-base mt-1">Soal Evaluasi IPS</h4>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-brand-300 font-semibold">Sisa Waktu</div>
+                            <div id="quiz-timer" class="font-mono text-xl font-extrabold text-amber-300">15:00</div>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-100 h-2">
+                        <div id="quiz-progress-bar" class="bg-amber-400 h-2 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <!-- Question Body -->
+                    <div class="p-6 sm:p-8 space-y-6">
+                        <div class="flex items-center justify-between text-xs font-bold text-slate-500">
+                            <span id="question-number-badge">Soal 1 dari 15</span>
+                            <span id="question-category-badge" class="bg-blue-50 text-brand-700 px-3 py-1 rounded-full">Geografi</span>
+                        </div>
+                        <!-- Question Text -->
+                        <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-snug">
+                            Loading pertanyaan...
+                        </h3>
+                        <!-- Options Container -->
+                        <div id="quiz-options-container" class="space-y-3">
+                            <!-- Dynamic Answer Options JS -->
+                        </div>
+                        <!-- Instant Explanation Alert (For Practice Mode) -->
+                        <div id="quiz-explanation-box" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 text-xs space-y-1">
+                            <p class="font-bold text-amber-900 flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb text-amber-600"></i> Pembahasan Soal:
+                            </p>
+                            <p id="quiz-explanation-text" class="text-slate-700 leading-relaxed">Penjelasan jawaban...</p>
+                        </div>
+                    </div>
+                    <!-- Footer Actions -->
+                    <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 flex items-center justify-between">
+                        <button onclick="quizPreviousQuestion()" id="btn-quiz-prev" class="text-xs font-bold text-slate-600 hover:text-brand-900 px-4 py-2 rounded-lg border border-slate-200 disabled:opacity-30 disabled:pointer-events-none">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+                        </button>
+                        <button onclick="quizNextQuestion()" id="btn-quiz-next" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-md flex items-center gap-2">
+                            <span>Lanjut Soal</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QUIZ RESULT SUMMARY SCREEN -->
+                <div id="quiz-result-screen" class="hidden max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 text-center space-y-6">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-4xl shadow-inner">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-brand-600 uppercase tracking-widest">Hasil Evaluasi Pembelajaran</span>
+                        <h3 class="text-2xl font-black text-slate-800 mt-1" id="res-student-title">Selesai Kuis</h3>
+                        <p class="text-xs text-slate-500 mt-1" id="res-date">Tanggal Pengerjaan</p>
+                    </div>
+                    <!-- Score Highlight -->
+                    <div class="bg-gradient-to-r from-brand-900 to-blue-900 text-white p-6 rounded-2xl space-y-2">
+                        <p class="text-xs text-brand-200 font-bold uppercase">Nilai Akhir Anda</p>
+                        <div class="text-5xl font-black text-amber-300" id="res-score">0</div>
+                        <p class="text-xs text-brand-200" id="res-status-kkm">Status: Memenuhi KKM (>= 75)</p>
+                    </div>
+                    <!-- Analysis Grid -->
+                    <div class="grid grid-cols-3 gap-3 text-center">
+                        <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl">
+                            <p class="text-xs text-emerald-600 font-bold">Benar</p>
+                            <p class="text-lg font-black text-emerald-800" id="res-correct">0</p>
+                        </div>
+                        <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl">
+                            <p class="text-xs text-rose-600 font-bold">Salah</p>
+                            <p class="text-lg font-black text-rose-800" id="res-wrong">0</p>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-100 p-3 rounded-xl">
+                            <p class="text-xs text-blue-600 font-bold">Waktu</p>
+                            <p class="text-lg font-black text-blue-800" id="res-time">00:00</p>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-100">
+                        <button onclick="resetToQuizModeSelector()" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-3 rounded-xl text-xs">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Kembali ke Menu Kuis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: DASHBOARD GURU & ANALISIS -->
+        <section id="view-guru" class="view-section hidden">
+            <div class="bg-brand-900 text-white py-10 border-b border-brand-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-amber-400 text-brand-950 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Panel Pendidik</span>
+                            <span class="text-xs text-brand-200">SMP Swasta Eka Edukasi Cahaya</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-black mt-1 flex items-center gap-3">
+                            <i class="fa-solid fa-chart-line text-amber-300"></i>
+                            Dashboard Guru & Analisis Numerasi
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                <!-- Teacher Summary Metrics Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">Bank Soal Pre & Post Test</div>
+                        <div class="text-2xl font-black text-brand-900 mt-1" id="teacher-stat-sessions">15 PRE / 15 POST</div>
+                        <div class="text-[11px] text-emerald-600 font-semibold mt-1"><i class="fa-solid fa-check"></i> Total 30 Soal Valid</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">Rata-Rata Pre-Test</div>
+                        <div class="text-2xl font-black text-rose-600 mt-1" id="teacher-stat-pre">58.7</div>
+                        <div class="text-[11px] text-slate-500 mt-1">Skor Penjajakan Awal</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">Rata-Rata Post-Test</div>
+                        <div class="text-2xl font-black text-emerald-600 mt-1" id="teacher-stat-post">87.3</div>
+                        <div class="text-[11px] text-emerald-600 font-bold mt-1"><i class="fa-solid fa-arrow-up"></i> +28.6 Peningkatan</div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                        <div class="text-xs font-bold text-slate-500">Tingkat Ketuntasan (KKM 75)</div>
+                        <div class="text-2xl font-black text-amber-600 mt-1" id="teacher-stat-ketuntasan">93.3%</div>
+                        <div class="text-[11px] text-slate-500 mt-1">Siswa Tuntas Post-Test</div>
+                    </div>
+                </div>
+
+                <!-- Visual Charts Section (Chart.js Pembanding Numerasi) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Bar Chart: Pre vs Post Test Comparison -->
+                    <div class="lg:col-span-8 bg-white p-6 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-bar text-brand-600"></i>
+                                    Grafik Pembanding Numerasi: Pre-Test vs Post-Test
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Perbandingan pencapaian nilai 15 soal Pre-Test dan 15 soal Post-Test per siswa</p>
+                            </div>
+                            <span class="text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1 rounded-full">15 Soal / Sesi</span>
+                        </div>
+                        <div class="relative h-72">
+                            <canvas id="teacher-chart-comparison"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Ringkasan Capaian Indikator -->
+                    <div class="lg:col-span-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200 space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie text-amber-500"></i>
+                            Analisis Capaian Peningkatan
+                        </h3>
+                        <div class="space-y-3 pt-2 text-xs">
+                            <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                                <p class="text-slate-600 font-medium">Rata-Rata N-Gain Score</p>
+                                <p class="text-xl font-black text-brand-900 mt-1">0.69 <span class="text-xs font-semibold text-emerald-600">(Kategori Tinggi)</span></p>
+                            </div>
+                            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                                <p class="text-slate-600 font-medium">Siswa Melampaui KKM</p>
+                                <p class="text-xl font-black text-emerald-700 mt-1">14 dari 15 Siswa</p>
+                            </div>
+                            <div class="p-3 bg-amber-50 rounded-xl border border-amber-100">
+                                <p class="text-slate-600 font-medium">Domain Peningkatan Tertinggi</p>
+                                <p class="text-sm font-bold text-amber-900 mt-1">Geografi & Kebudayaan Nusantara</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submissions Table -->
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-base">Daftar Hasil Nilai Siswa Realtime</h3>
+                            <p class="text-xs text-slate-500">Data tersimpan secara realtime di memori lokal</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="teacher-table-search" oninput="renderTeacherTable()" placeholder="Cari Nama / NIS..." class="bg-slate-50 border border-slate-200 text-xs rounded-xl px-3 py-2 outline-none">
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 uppercase font-bold border-b border-slate-100">
+                                <tr>
+                                    <th class="p-4">NIS</th>
+                                    <th class="p-4">Nama Siswa</th>
+                                    <th class="p-4">Tipe Ujian</th>
+                                    <th class="p-4">Skor / 100</th>
+                                    <th class="p-4">Status KKM</th>
+                                    <th class="p-4">Waktu Pengerjaan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacher-table-body" class="divide-y divide-slate-100 text-slate-700">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: KELOLA DATA & BANK SOAL (ADMIN) -->
+        <section id="view-admin" class="view-section hidden">
+            <div class="bg-brand-950 text-white py-10 border-b border-brand-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="bg-amber-400 text-brand-950 text-[10px] font-black px-2 py-0.5 rounded uppercase">Panel Admin Realtime</span>
+                        <h2 class="text-2xl sm:text-3xl font-black mt-1 flex items-center gap-3">
+                            <i class="fa-solid fa-user-shield text-amber-300"></i>
+                            Manajemen Kosakata & Bank Soal
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openAddKosakataModal()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Kosakata
+                        </button>
+                        <button onclick="openAddSoalModal()" class="bg-amber-400 hover:bg-amber-300 text-brand-950 font-extrabold text-xs px-4 py-2.5 rounded-xl shadow flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Tambah Soal
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+                <!-- Management Tabs -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-4 border-b border-slate-100 pb-4">
+                        <button onclick="switchAdminTab('kosakata')" id="tab-btn-kosakata" class="font-bold text-sm text-brand-600 border-b-2 border-brand-600 pb-2">Daftar Kosakata Realtime</button>
+                        <button onclick="switchAdminTab('soal')" id="tab-btn-soal" class="font-bold text-sm text-slate-400 hover:text-slate-700 pb-2">Bank Soal (15 Pre / 15 Post)</button>
+                    </div>
+
+                    <!-- Kosakata Table Container -->
+                    <div id="admin-tab-kosakata" class="pt-4 overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 uppercase font-bold border-b border-slate-100">
+                                <tr>
+                                    <th class="p-3">Gambar</th>
+                                    <th class="p-3">Istilah</th>
+                                    <th class="p-3">Kategori</th>
+                                    <th class="p-3">Arti / Definisi</th>
+                                    <th class="p-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-kosakata-body" class="divide-y divide-slate-100">
+                                <!-- Dynamic Kosakata Table -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Soal Table Container -->
+                    <div id="admin-tab-soal" class="pt-4 overflow-x-auto hidden">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 uppercase font-bold border-b border-slate-100">
+                                <tr>
+                                    <th class="p-3">Tipe</th>
+                                    <th class="p-3">No</th>
+                                    <th class="p-3">Pertanyaan</th>
+                                    <th class="p-3">Kunci</th>
+                                    <th class="p-3 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-soal-body" class="divide-y divide-slate-100">
+                                <!-- Dynamic Soal Table -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: TAMBAH KOSAKATA (DENGAN UPLOAD FOTO IMAGE/PNG) -->
+    <div id="modal-add-kosakata" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-book-medical text-brand-600"></i> Tambah Kosakata IPS Baru
+                </h3>
+                <button onclick="closeAddKosakataModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveNewKosakata(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Istilah Kosakata *</label>
+                    <input type="text" id="add-kata-nama" required placeholder="Contoh: Subak, Barter, Garis Wallace" class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Kategori IPS *</label>
+                    <select id="add-kata-kategori" class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500">
+                        <option value="Geografi">Geografi</option>
+                        <option value="Sejarah">Sejarah</option>
+                        <option value="Kebudayaan Nusantara">Kebudayaan Nusantara</option>
+                        <option value="Ekonomi">Ekonomi</option>
+                        <option value="Sosio-Budaya">Sosio-Budaya</option>
+                        <option value="Umum">Umum IPS</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Upload File Foto / Gambar (PNG, JPG, WEBP) *</label>
+                    <input type="file" id="add-kata-file" accept="image/*" onchange="previewUploadImage(this, 'add-kata-preview', 'add-kata-gambar-data')" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-600">
+                    <input type="hidden" id="add-kata-gambar-data">
+                    <div id="add-kata-preview-container" class="mt-2 hidden">
+                        <p class="text-[10px] text-slate-500 mb-1">Pratinjau Gambar Terpilih:</p>
+                        <img id="add-kata-preview" src="" alt="Preview" class="h-32 rounded-xl object-cover border border-slate-200">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Arti / Definisi Lengkap *</label>
+                    <textarea id="add-kata-arti" required rows="3" placeholder="Jelaskan arti istilah secara rinci dan valid..." class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500"></textarea>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Contoh Kontekstual Kalimat</label>
+                    <input type="text" id="add-kata-contoh" placeholder="Contoh penggunaan kata dalam materi IPS..." class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Sinonim / Istilah Padanan</label>
+                        <input type="text" id="add-kata-sinonim" placeholder="Persamaan kata" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Antonim / Lawan Kata</label>
+                        <input type="text" id="add-kata-antonim" placeholder="Lawan kata" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeAddKosakataModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold shadow-md">Simpan Ke Memori (Realtime)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: TAMBAH SOAL (PRE / POST TEST) -->
+    <div id="modal-add-soal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-amber-500"></i> Tambah Soal Ujian IPS
+                </h3>
+                <button onclick="closeAddSoalModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="saveNewSoal(event)" class="space-y-4 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Tipe Ujian *</label>
+                        <select id="add-soal-tipe" class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500">
+                            <option value="PRE">PRE-TEST</option>
+                            <option value="POST">POST-TEST</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Kunci Jawaban *</label>
+                        <select id="add-soal-kunci" class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Pertanyaan Soal *</label>
+                    <textarea id="add-soal-teks" required rows="3" placeholder="Tuliskan pertanyaan soal IPS..." class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Pilihan A *</label>
+                        <input type="text" id="add-soal-optA" required placeholder="Jawaban A" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Pilihan B *</label>
+                        <input type="text" id="add-soal-optB" required placeholder="Jawaban B" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Pilihan C *</label>
+                        <input type="text" id="add-soal-optC" required placeholder="Jawaban C" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Pilihan D *</label>
+                        <input type="text" id="add-soal-optD" required placeholder="Jawaban D" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-brand-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Pembahasan Soal</label>
+                    <textarea id="add-soal-pemb" rows="2" placeholder="Penjelasan pembahasan jawaban benar..." class="w-full border border-slate-200 rounded-xl p-3 outline-none focus:border-brand-500"></textarea>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeAddSoalModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-brand-950 font-extrabold shadow-md">Simpan Soal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER LENGKAP DENGAN DATA PENGEMBANG DI BAGIAN BAWAH -->
+    <footer class="bg-brand-950 text-white border-t border-brand-900 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <div class="md:col-span-6 space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white text-xl font-bold">
+                            <i class="fa-solid fa-compass-drafting"></i>
+                        </div>
+                        <span class="font-black text-lg tracking-tight">KAMUS VISUAL NUSANTARA</span>
+                    </div>
+                    <p class="text-xs text-brand-200 leading-relaxed max-w-md">
+                        Aplikasi pembelajaran IPS SMP terpadu berbasis visual interaktif, kamus Nusantara, dan Smart Quiz evaluasi Pre-Test / Post-Test.
+                    </p>
+                </div>
+
+                <!-- DATA PENGEMBANG (HANYA DITAMPILKAN RINGKAS DI BAWAH) -->
+                <div class="md:col-span-6 bg-brand-900/60 p-5 rounded-2xl border border-brand-800 space-y-2">
+                    <h4 class="text-xs font-extrabold text-amber-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-user-graduate"></i> Data Pengembang Aplikasi
+                    </h4>
+                    <p class="text-sm font-bold text-white">Eka Winarti, S.Pd., Gr.</p>
+                    <p class="text-xs text-brand-200">Guru IPS di SMP Swasta Eka Edukasi Cahaya</p>
+                    <p class="text-[11px] text-brand-300 pt-1 border-t border-brand-800/80">
+                        Dikembangkan khusus untuk mendukung efektivitas dan evaluasi pembelajaran Ilmu Pengetahuan Sosial (IPS) SMP.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-brand-900 text-center text-xs text-brand-300">
+                <p>&copy; 2026 Kamus Visual Nusantara & Smart Quiz. Semua Hak Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC REALTIME & LOCALSTORAGE -->
+    <script>
+        // STORAGE KEYS
+        const KEY_KOSAKATA = 'kvn_kosakata_v3';
+        const KEY_SOAL_PRE = 'kvn_soal_pre_v3';
+        const KEY_SOAL_POST = 'kvn_soal_post_v3';
+        const KEY_SUBMISSIONS = 'kvn_submissions_v3';
+
+        // DEFAULT DATA KOSAKATA VALID
+        const defaultKosakata = [
+            {
+                id: 'k1',
+                nama: 'Subak',
+                kategori: 'Kebudayaan Nusantara',
+                arti: 'Sistem organisasi kemasyarakatan tradisional di Bali yang khusus mengatur sistem pengairan sawah secara adil dan teratur berbasis kearifan lokal.',
+                contoh: 'Sistem Subak di Bali telah diakui UNESCO sebagai Warisan Budaya Dunia.',
+                gambar: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Irigasi Tradisional Bali',
+                antonim: 'Irigasi Modern/Mekanis'
+            },
+            {
+                id: 'k2',
+                nama: 'Barter',
+                kategori: 'Ekonomi',
+                arti: 'Sistem perdagangan atau pertukaran barang dan jasa secara langsung tanpa menggunakan uang sebagai alat pembayaran.',
+                contoh: 'Masyarakat pesisir bertukar garam dengan beras milik petani gunung melalui sistem barter.',
+                gambar: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Pertukaran Barang',
+                antonim: 'Transaksi Moneter'
+            },
+            {
+                id: 'k3',
+                nama: 'Megalitikum',
+                kategori: 'Sejarah',
+                arti: 'Zaman batu besar dalam sejarah kebudayaan praaksara di mana manusia membuat monumen dan peninggalan dari batu berukuran besar.',
+                contoh: 'Punden berundak dan menhir merupakan salah satu peninggalan zaman Megalitikum.',
+                gambar: 'https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Zaman Batu Besar',
+                antonim: 'Zaman Logam'
+            },
+            {
+                id: 'k4',
+                nama: 'Rumah Gadang',
+                kategori: 'Kebudayaan Nusantara',
+                arti: 'Rumah adat tradisional suku Minangkabau di Sumatera Barat dengan bentuk atap melengkung runcing menyerupai tanduk kerbau (gonjong).',
+                contoh: 'Rumah Gadang dibangun dengan prinsip ramah gempa menggunakan pasak kayu.',
+                gambar: 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Rumah Bagonjong',
+                antonim: '-'
+            },
+            {
+                id: 'k5',
+                nama: 'Garis Wallace',
+                kategori: 'Geografi',
+                arti: 'Garis imajiner yang memisahkan wilayah geografi hewan (fauna) tipe Asiatis di bagian barat Indonesia dengan tipe Peralihan di tengah.',
+                contoh: 'Garis Wallace membentang di antara Pulau Kalimantan dan Sulawesi serta Selat Bali dan Lombok.',
+                gambar: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Garis Pemisah Fauna',
+                antonim: '-'
+            },
+            {
+                id: 'k6',
+                nama: 'Asimilasi',
+                kategori: 'Sosio-Budaya',
+                arti: 'Pembauran dua kebudayaan atau lebih yang disertai dengan hilangnya ciri khas kebudayaan asli sehingga membentuk kebudayaan baru.',
+                contoh: 'Pernikahan antarsuku menghasilkan asimilasi tradisi dan bahasa dalam keluarga baru.',
+                gambar: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Pembauran Kebudayaan',
+                antonim: 'Isolasi Budaya'
+            },
+            {
+                id: 'k7',
+                nama: 'Inflasi',
+                kategori: 'Ekonomi',
+                arti: 'Kenaikan harga barang dan jasa secara umum serta terus-menerus dalam jangka waktu tertentu yang mengakibatkan penurunan daya beli uang.',
+                contoh: 'Bank Indonesia terus memantau laju inflasi agar harga bahan pokok tetap stabil.',
+                gambar: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Kemerosotan Nilai Uang',
+                antonim: 'Deflasi'
+            },
+            {
+                id: 'k8',
+                nama: 'Prasasti',
+                kategori: 'Sejarah',
+                arti: 'Piagam atau dokumen kuno yang diukir pada bahan keras dan tahan lama seperti batu, tembaga, atau daun lontar sebagai bukti sejarah tertulis.',
+                contoh: 'Prasasti Ciaruteun berisi bekas tapak kaki Raja Purnawarman dari Kerajaan Tarumanegara.',
+                gambar: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600',
+                sinonim: 'Batu Bersurat',
+                antonim: '-'
+            }
+        ];
+
+        // DEFAULT 15 SOAL PRE-TEST
+        const defaultSoalPre = [
+            { id: 'pre1', type: 'PRE', no: 1, teks: 'Sistem irigasi tradisional di Bali yang mengedepankan asas keadilan dan filosofi Tri Hita Karana adalah...', opsi: { A: 'Subak', B: 'Sengkedan', C: 'Terasering', D: 'Sistem Kanal' }, kunci: 'A', pemb: 'Subak adalah sistem irigasi tradisional khas Bali yang mengutamakan nilai kebersamaan.' },
+            { id: 'pre2', type: 'PRE', no: 2, teks: 'Sistem perdagangan awal manusia dengan menukar barang dengan barang dinamakan...', opsi: { A: 'Moneter', B: 'Barter', C: 'Kredit', D: 'Subsidi' }, kunci: 'B', pemb: 'Barter adalah sistem pertukaran barang secara langsung tanpa menggunakan uang.' },
+            { id: 'pre3', type: 'PRE', no: 3, teks: 'Monumen batu besar dan punden berundak merupakan peninggalan zaman...', opsi: { A: 'Paleolitikum', B: 'Mesolitikum', C: 'Megalitikum', D: 'Neolitikum' }, kunci: 'C', pemb: 'Megalitikum dikenal sebagai zaman batu besar.' },
+            { id: 'pre4', type: 'PRE', no: 4, teks: 'Garis khayal yang memisahkan fauna tipe Asiatis dan Peralihan diprakarsai oleh...', opsi: { A: 'Weber', B: 'Wallace', C: 'Junghuhn', D: 'Koppen' }, kunci: 'B', pemb: 'Garis Wallace memisahkan persebaran fauna Asiatis dan Peralihan.' },
+            { id: 'pre5', type: 'PRE', no: 5, teks: 'Proses pembauran dua kebudayaan yang melahirkan kebudayaan baru dinamakan...', opsi: { A: 'Akulturasi', B: 'Asimilasi', C: 'Difusi', D: 'Akomodasi' }, kunci: 'B', pemb: 'Asimilasi ditandai dengan terbentuknya kebudayaan baru.' },
+            { id: 'pre6', type: 'PRE', no: 6, teks: 'Kenaikan harga barang dan jasa secara umum serta berlangsung terus-menerus disebut...', opsi: { A: 'Deflasi', B: 'Inflasi', C: 'Devaluasi', D: 'Revaluasi' }, kunci: 'B', pemb: 'Inflasi merupakan kecenderungan naiknya harga-harga secara umum.' },
+            { id: 'pre7', type: 'PRE', no: 7, teks: 'Kerajaan Hindu tertua di Indonesia yang dibuktikan dengan penemuan 7 Yupa adalah...', opsi: { A: 'Tarumanegara', B: 'Kutai', C: 'Majapahit', D: 'Sriwijaya' }, kunci: 'B', pemb: 'Kerajaan Kutai di Kalimantan Timur adalah kerajaan Hindu tertua.' },
+            { id: 'pre8', type: 'PRE', no: 8, teks: 'Rumah adat Bagonjong khas Sumatera Barat dinamakan...', opsi: { A: 'Rumah Tongkonan', B: 'Rumah Gadang', C: 'Rumah Joglo', D: 'Rumah Lamin' }, kunci: 'B', pemb: 'Rumah Gadang adalah rumah adat suku Minangkabau.' },
+            { id: 'pre9', type: 'PRE', no: 9, teks: 'Metode penanaman bertingkat di lahan miring pegunungan untuk mencegah erosi dinamakan...', opsi: { A: 'Sengkedan / Terasering', B: 'Irigasi Komersial', C: 'Kanalisasi', D: 'Drainase' }, kunci: 'A', pemb: 'Sengkedan atau terasering dibuat untuk menahan erosi tanah.' },
+            { id: 'pre10', type: 'PRE', no: 10, teks: 'Prasasti Ciaruteun dengan bekas tapak kaki Raja Purnawarman peninggalan Kerajaan...', opsi: { A: 'Kutai', B: 'Tarumanegara', C: 'Mataram Kuno', D: 'Singasari' }, kunci: 'B', pemb: 'Prasasti Ciaruteun peninggalan Kerajaan Tarumanegara.' },
+            { id: 'pre11', type: 'PRE', no: 11, teks: 'Sensitivitas iklim Indonesia dipengaruhi oleh dua samudra besar yaitu...', opsi: { A: 'Pasifik dan Hindia', B: 'Atlantik dan Hindia', C: 'Pasifik dan Arktik', D: 'Atlantik dan Pasifik' }, kunci: 'A', pemb: 'Indonesia terletak di antara Samudra Pasifik dan Samudra Hindia.' },
+            { id: 'pre12', type: 'PRE', no: 12, teks: 'Pelaku ekonomi yang menyediakan faktor produksi tanah, tenaga kerja, dan modal adalah...', opsi: { A: 'Rumah Tangga Konsumen (RTK)', B: 'Rumah Tangga Produsen (RTP)', C: 'Pemerintah', D: 'Masyarakat Luar Negeri' }, kunci: 'A', pemb: 'RTK berperan menyediakan faktor-faktor produksi.' },
+            { id: 'pre13', type: 'PRE', no: 13, teks: 'Bentuk kerja sama gotong royong mendirikan rumah di masyarakat Jawa dikenal dengan...', opsi: { A: 'Subak', B: 'Sambatan', C: 'Ngada', D: 'Rumpun' }, kunci: 'B', pemb: 'Sambatan adalah tradisi gotong royong bantu-membantu mendirikan rumah.' },
+            { id: 'pre14', type: 'PRE', no: 14, teks: 'Angin Muson Barat yang bertiup dari Asia ke Australia menyebabkan musim...', opsi: { A: 'Kemarau', B: 'Hujan', C: 'Pancaroba', D: 'Salju' }, kunci: 'B', pemb: 'Angin Muson Barat membawa uap air yang menyebabkan musim hujan.' },
+            { id: 'pre15', type: 'PRE', no: 15, teks: 'Pusat kerajaan Maritim terbesar di Indonesia yang menjadi pusat Buddha adalah...', opsi: { A: 'Majapahit', B: 'Sriwijaya', C: 'Singasari', D: 'Kalingga' }, kunci: 'B', pemb: 'Sriwijaya merupakan kerajaan bahari dan pusat studi Buddha.' }
+        ];
+
+        // DEFAULT 15 SOAL POST-TEST
+        const defaultSoalPost = [
+            { id: 'post1', type: 'POST', no: 1, teks: 'Keunggulan lokasi strategis Indonesia di antara dua benua dan dua samudra berpengaruh pada...', opsi: { A: 'Jalur perdagangan internasional', B: 'Penurunan suhu udara', C: 'Hilangnya keragaman flora', D: 'Isolasi budaya' }, kunci: 'A', pemb: 'Posisi silang menjadikan Indonesia sebagai simpul utama jalur pelayaran dunia.' },
+            { id: 'post2', type: 'POST', no: 2, teks: 'Filosofi Tri Hita Karana dalam Subak Bali mengatur hubungan harmonis antara...', opsi: { A: 'Tuhan, manusia, dan lingkungan', B: 'Raja, rakyat, dan prajurit', C: 'Pedagang, pembeli, dan barang', D: 'Petani, tengkulak, dan pasar' }, kunci: 'A', pemb: 'Tri Hita Karana menekankan keselarasan hubungan dengan Tuhan, sesama manusia, dan alam.' },
+            { id: 'post3', type: 'POST', no: 3, teks: 'Perbedaan mendasar antara Akulturasi dan Asimilasi terletak pada...', opsi: { A: 'Bertahannya kebudayaan asli pada akulturasi', B: 'Hilangnya kebudayaan asing pada akulturasi', C: 'Pemberlakuan hukum adat', D: 'Jumlah masyarakat pengikut' }, kunci: 'A', pemb: 'Pada akulturasi, kebudayaan asli tetap bertahan tanpa kehilangan kepribadiannya.' },
+            { id: 'post4', type: 'POST', no: 4, teks: 'Salah satu dampak negatif dari laju inflasi yang terlalu tinggi adalah...', opsi: { A: 'Daya beli masyarakat menurun', B: 'Harga barang semakin murah', C: 'Nilai tabungan meningkat', D: 'Nilai tukar mata uang menguat' }, kunci: 'A', pemb: 'Inflasi tinggi menurunkan nilai riil uang sehingga daya beli masyarakat melemah.' },
+            { id: 'post5', type: 'POST', no: 5, teks: 'Kerajaan Sriwijaya mampu berkembang menjadi kerajaan maritim yang kuat karena...', opsi: { A: 'Menguasai Selat Malaka dan lalu lintas pelayaran', B: 'Mengandalkan hasil pertanian padi di lereng gunung', C: 'Menolak pedagang asing', D: 'Membangun benteng batu megalitikum' }, kunci: 'A', pemb: 'Penguasaan Selat Malaka menjadikan Sriwijaya pusat perdagangan internasional.' },
+            { id: 'post6', type: 'POST', no: 6, teks: 'Struktur bangunan Rumah Gadang panggung kayu pasak merupakan bentuk kearifan lokal terhadap ancaman...', opsi: { A: 'Gempa bumi', B: 'Tsunami', C: 'Angin puting beliung', D: 'Erosi pantai' }, kunci: 'A', pemb: 'Konstruksi kayu fleksibel tanpa paku besi membuat Rumah Gadang tahan gempa.' },
+            { id: 'post7', type: 'POST', no: 7, teks: 'Fauna tipe Peralihan yang mendiami kawasan garis Wallace dan Weber contohnya adalah...', opsi: { A: 'Gajah dan Harimau', B: 'Komodo dan Anoa', C: 'Burung Cendrawasih dan Kanguru', D: 'Badak Jawa dan Orangutan' }, kunci: 'B', pemb: 'Komodo dan Anoa adalah contoh fauna endemik tipe Peralihan.' },
+            { id: 'post8', type: 'POST', no: 8, teks: 'Prasasti Yupa mencatat kedermawanan Raja Mulawarman yang menyedekahkan...', opsi: { A: '20.000 ekor lembu', B: 'Emas murni 100 kg', C: '1000 kapal perang', D: 'Sawah 100 hektar' }, kunci: 'A', pemb: 'Yupa mencatat Raja Mulawarman menyedekahkan 20.000 ekor lembu kepada para Brahmana.' },
+            { id: 'post9', type: 'POST', no: 9, teks: 'Pembuatan terasering pada lahan pertanian berbukit memiliki fungsi ekologis utama untuk...', opsi: { A: 'Mencegah erosi dan longsor', B: 'Mempercepat penguapan air', C: 'Memperbanyak gulma', D: 'Mengurangi zat hara tanah' }, kunci: 'A', pemb: 'Terasering memperlambat aliran air permukaan sehingga mencegah erosi.' },
+            { id: 'post10', type: 'POST', no: 10, teks: 'Contoh kegiatan Rumah Tangga Produsen (RTP) dalam siklus perekonomian adalah...', opsi: { A: 'Memproduksi barang dan membayar gaji tenaga kerja', B: 'Menyediakan lahan tanah sewa', C: 'Membeli barang kebutuhan pokok', D: 'Menerima pajak bangunan' }, kunci: 'A', pemb: 'RTP bertindak sebagai unit yang mengolah faktor produksi menjadi barang/jasa.' },
+            { id: 'post11', type: 'POST', no: 11, teks: 'Sumpah Palapa yang diucapkan oleh Mahapatih Gajah Mada bertujuan untuk...', opsi: { A: 'Mempersatukan Nusantara di bawah Majapahit', B: 'Mendirikan candi Borobudur', C: 'Mengusir pedagang Portugis', D: 'Membagi wilayah kerajaan' }, kunci: 'A', pemb: 'Sumpah Palapa merupakan komitmen Gajah Mada menyatukan Nusantara.' },
+            { id: 'post12', type: 'POST', no: 12, teks: 'Tradisi Lompat Batu (Fahombo) di Nias secara historis berfungsi sebagai...', opsi: { A: 'Uji kedewasaan dan kesiapan prajurit perang', B: 'Upacara panen padi', C: 'Penentuan gelar keagamaan', D: 'Penyambutan tamu asing' }, kunci: 'A', pemb: 'Fahombo digunakan untuk menguji ketangkasan pemuda Nias sebelum menjadi prajurit.' },
+            { id: 'post13', type: 'POST', no: 13, teks: 'Manakah yang termasuk bentuk interaksi sosial asosiatif?', opsi: { A: 'Kooperatif / Kerjasama', B: 'Konflik terbuka', C: 'Kompetisi sengit', D: 'Kontravensi' }, kunci: 'A', pemb: 'Kerjasama/kooperasi merupakan bentuk interaksi sosial asosiatif.' },
+            { id: 'post14', type: 'POST', no: 14, teks: 'Jika jumlah penawaran suatu barang melonjak tinggi sedangkan permintaan tetap, maka harga cenderung...', opsi: { A: 'Turun', B: 'Naik pesat', C: 'Tetap konstan', D: 'Tidak terhingga' }, kunci: 'A', pemb: 'Jika pasokan berlimpah melebihi permintaan, harga barang akan cenderung turun.' },
+            { id: 'post15', type: 'POST', no: 15, teks: 'Garis Weber memisahkan wilayah persebaran fauna tipe Peralihan dengan tipe...', opsi: { A: 'Australis', B: 'Asiatis', C: 'Neartik', D: 'Ethiopian' }, kunci: 'A', pemb: 'Garis Weber memisahkan fauna Peralihan dengan fauna tipe Australis.' }
+        ];
+
+        // DEFAULT SUBMISSIONS SAMPLE FOR NUMERACY CHART
+        const defaultSubmissions = [
+            { nis: '1001', nama: 'Andi Pratama', testType: 'PRE', score: 60, time: '12:40', date: '2026-09-20' },
+            { nis: '1001', nama: 'Andi Pratama', testType: 'POST', score: 87, time: '10:15', date: '2026-09-21' },
+            { nis: '1002', nama: 'Bunga Lestari', testType: 'PRE', score: 53, time: '14:20', date: '2026-09-20' },
+            { nis: '1002', nama: 'Bunga Lestari', testType: 'POST', score: 93, time: '09:45', date: '2026-09-21' },
+            { nis: '1003', nama: 'Citra Dewi', testType: 'PRE', score: 67, time: '13:10', date: '2026-09-20' },
+            { nis: '1003', nama: 'Citra Dewi', testType: 'POST', score: 87, time: '11:00', date: '2026-09-21' },
+            { nis: '1004', nama: 'Dedi Kurniawan', testType: 'PRE', score: 53, time: '11:30', date: '2026-09-20' },
+            { nis: '1004', nama: 'Dedi Kurniawan', testType: 'POST', score: 80, time: '10:30', date: '2026-09-21' },
+            { nis: '1005', nama: 'Eka Putri', testType: 'PRE', score: 60, time: '15:00', date: '2026-09-20' },
+            { nis: '1005', nama: 'Eka Putri', testType: 'POST', score: 93, time: '09:15', date: '2026-09-21' }
+        ];
+
+        // GLOBAL APPLICATION STATE
+        let mockKosakataList = [];
+        let mockSoalPreList = [];
+        let mockSoalPostList = [];
+        let mockSubmissions = [];
+
+        let currentActiveView = 'home';
+        let currentRole = 'siswa';
+        let selectedCategoryFilter = 'ALL';
+
+        // QUIZ STATE
+        let activeQuizQuestions = [];
+        let activeQuestionIndex = 0;
+        let userAnswers = {};
+        let quizTimerInterval = null;
+        let quizTimeRemaining = 0;
+        let activeQuizMode = 'PRACTICE';
+        let activeStudentData = { nama: '', nis: '', testType: 'PRE' };
+
+        // CHART INSTANCE
+        let teacherChartInstance = null;
+
+        // INITIALIZE APP ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAllDataFromStorage();
+            renderKamusGrid();
+            updateStatisticsCounters();
+            renderTeacherTable();
+            renderAdminTables();
+            initTeacherChart();
+        });
+
+        // LOCALSTORAGE PERSISTENCE LOGIC
+        function loadAllDataFromStorage() {
+            const storedKosakata = localStorage.getItem(KEY_KOSAKATA);
+            mockKosakataList = storedKosakata ? JSON.parse(storedKosakata) : [...defaultKosakata];
+
+            const storedSoalPre = localStorage.getItem(KEY_SOAL_PRE);
+            mockSoalPreList = storedSoalPre ? JSON.parse(storedSoalPre) : [...defaultSoalPre];
+
+            const storedSoalPost = localStorage.getItem(KEY_SOAL_POST);
+            mockSoalPostList = storedSoalPost ? JSON.parse(storedSoalPost) : [...defaultSoalPost];
+
+            const storedSubmissions = localStorage.getItem(KEY_SUBMISSIONS);
+            mockSubmissions = storedSubmissions ? JSON.parse(storedSubmissions) : [...defaultSubmissions];
+
+            saveAllDataToStorage();
+        }
+
+        function saveAllDataToStorage() {
+            localStorage.setItem(KEY_KOSAKATA, JSON.stringify(mockKosakataList));
+            localStorage.setItem(KEY_SOAL_PRE, JSON.stringify(mockSoalPreList));
+            localStorage.setItem(KEY_SOAL_POST, JSON.stringify(mockSoalPostList));
+            localStorage.setItem(KEY_SUBMISSIONS, JSON.stringify(mockSubmissions));
+        }
+
+        // NAVIGATION LOGIC
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) {
+                target.classList.remove('hidden');
+                currentActiveView = viewId;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            if (viewId === 'guru') {
+                setTimeout(() => { initTeacherChart(); }, 100);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function changeRole(role) {
+            currentRole = role;
+            alert(`Peran telah diganti menjadi: ${role.toUpperCase()}`);
+        }
+
+        // SPEECH SYNTHESIS (TTS)
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Fitur pelafalan suara tidak didukung oleh browser Anda.');
+            }
+        }
+
+        // KOSAKATA GRID RENDER & FILTER
+        function setCategoryFilter(cat) {
+            selectedCategoryFilter = cat;
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                btn.className = 'cat-pill bg-brand-800 hover:bg-brand-700 text-white px-4 py-2 rounded-xl whitespace-nowrap';
+            });
+            const activeBtn = document.getElementById(`cat-pill-${cat}`);
+            if (activeBtn) {
+                activeBtn.className = 'cat-pill bg-amber-400 text-brand-950 px-4 py-2 rounded-xl whitespace-nowrap shadow-sm font-bold';
+            }
+            renderKamusGrid();
+        }
+
+        function filterKamusCategory(cat) {
+            navigateTo('kamus');
+            setCategoryFilter(cat);
+        }
+
+        function clearKamusSearch() {
+            document.getElementById('kamus-search').value = '';
+            renderKamusGrid();
+        }
+
+        function resetKamusFilters() {
+            document.getElementById('kamus-search').value = '';
+            setCategoryFilter('ALL');
+        }
+
+        function renderKamusGrid() {
+            const grid = document.getElementById('kamus-grid');
+            const empty = document.getElementById('kamus-empty');
+            const searchVal = (document.getElementById('kamus-search').value || '').toLowerCase();
+            const sortVal = document.getElementById('kamus-sort').value;
+
+            let filtered = mockKosakataList.filter(item => {
+                const matchCat = (selectedCategoryFilter === 'ALL') || (item.kategori === selectedCategoryFilter);
+                const matchSearch = item.nama.toLowerCase().includes(searchVal) || item.arti.toLowerCase().includes(searchVal);
+                return matchCat && matchSearch;
+            });
+
+            if (sortVal === 'az') filtered.sort((a,b) => a.nama.localeCompare(b.nama));
+            else if (sortVal === 'za') filtered.sort((a,b) => b.nama.localeCompare(a.nama));
+
+            document.getElementById('kamus-count-info').innerText = `Menampilkan ${filtered.length} Kata`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-slate-100">
+                            <img src="${item.gambar}" alt="${item.nama}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-brand-900/90 text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full backdrop-blur-sm">
+                                ${item.kategori}
+                            </span>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-extrabold text-lg text-slate-800">${item.nama}</h3>
+                                <button onclick="speakText('${item.nama} - ${item.arti.replace(/'/g, "\\'")}')" class="text-brand-600 hover:text-brand-800 p-2 bg-brand-50 rounded-xl transition-colors">
+                                    <i class="fa-solid fa-volume-high text-sm"></i>
+                                </button>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">${item.arti}</p>
+                            ${item.contoh ? `
+                                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-[11px] text-slate-500 italic">
+                                    <span class="font-bold not-italic text-brand-700">Contoh:</span> "${item.contoh}"
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                        <span>Sinonim: <strong class="text-slate-700">${item.sinonim || '-'}</strong></span>
+                        <span>Antonim: <strong class="text-slate-700">${item.antonim || '-'}</strong></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // FILE UPLOAD HANDLER (IMAGE TO BASE64)
+        function previewUploadImage(fileInput, previewImgId, hiddenDataId) {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Str = e.target.result;
+                    document.getElementById(hiddenDataId).value = base64Str;
+                    const prevImg = document.getElementById(previewImgId);
+                    if (prevImg) {
+                        prevImg.src = base64Str;
+                        document.getElementById(`${previewImgId}-container`).classList.remove('hidden');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // SAVE NEW KOSAKATA (REALTIME)
+        function saveNewKosakata(e) {
+            e.preventDefault();
+            const nama = document.getElementById('add-kata-nama').value.trim();
+            const kategori = document.getElementById('add-kata-kategori').value;
+            const gambarData = document.getElementById('add-kata-gambar-data').value || 'https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&q=80&w=600';
+            const arti = document.getElementById('add-kata-arti').value.trim();
+            const contoh = document.getElementById('add-kata-contoh').value.trim();
+            const sinonim = document.getElementById('add-kata-sinonim').value.trim();
+            const antonim = document.getElementById('add-kata-antonim').value.trim();
+
+            const newItem = {
+                id: 'k_' + Date.now(),
+                nama, kategori, gambar: gambarData, arti, contoh, sinonim, antonim
+            };
+
+            mockKosakataList.unshift(newItem);
+            saveAllDataToStorage();
+            renderKamusGrid();
+            updateStatisticsCounters();
+            renderAdminTables();
+            closeAddKosakataModal();
+            alert('Kosakata baru berhasil disimpan dan tersimpan secara realtime!');
+        }
+
+        // SAVE NEW SOAL (REALTIME)
+        function saveNewSoal(e) {
+            e.preventDefault();
+            const tipe = document.getElementById('add-soal-tipe').value;
+            const teks = document.getElementById('add-soal-teks').value.trim();
+            const optA = document.getElementById('add-soal-optA').value.trim();
+            const optB = document.getElementById('add-soal-optB').value.trim();
+            const optC = document.getElementById('add-soal-optC').value.trim();
+            const optD = document.getElementById('add-soal-optD').value.trim();
+            const kunci = document.getElementById('add-soal-kunci').value;
+            const pemb = document.getElementById('add-soal-pemb').value.trim();
+
+            const targetList = (tipe === 'PRE') ? mockSoalPreList : mockSoalPostList;
+            const newItem = {
+                id: (tipe === 'PRE' ? 'pre_' : 'post_') + Date.now(),
+                type: tipe,
+                no: targetList.length + 1,
+                teks,
+                opsi: { A: optA, B: optB, C: optC, D: optD },
+                kunci,
+                pemb
+            };
+
+            targetList.push(newItem);
+            saveAllDataToStorage();
+            updateStatisticsCounters();
+            renderAdminTables();
+            closeAddSoalModal();
+            alert(`Soal ${tipe}-Test baru berhasil disimpan ke Bank Soal!`);
+        }
+
+        // QUIZ ENGINE LOGIC
+        function startPracticeQuiz() {
+            const category = document.getElementById('practice-category').value;
+            const count = parseInt(document.getElementById('practice-count').value, 10);
+
+            let pool = [...mockSoalPreList, ...mockSoalPostList];
+            activeQuizQuestions = pool.slice(0, count);
+
+            activeQuizMode = 'PRACTICE';
+            activeQuestionIndex = 0;
+            userAnswers = {};
+            quizTimeRemaining = count * 90;
+
+            document.getElementById('quiz-mode-selector').classList.add('hidden');
+            document.getElementById('quiz-runner').classList.remove('hidden');
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-type-tag').innerText = 'MODE LATIHAN MANDIRI';
+
+            startQuizTimer();
+            renderQuizQuestion();
+        }
+
+        function startEvaluationQuiz() {
+            const testType = document.getElementById('eval-test-type').value;
+            const name = document.getElementById('eval-student-name').value.trim();
+            const nis = document.getElementById('eval-student-nis').value.trim();
+
+            if (!name || !nis) {
+                alert('Harap isi Nama Siswa dan NIS / Kelas terlebih dahulu.');
+                return;
+            }
+
+            activeStudentData = { nama: name, nis: nis, testType: testType };
+            activeQuizQuestions = (testType === 'PRE') ? [...mockSoalPreList] : [...mockSoalPostList];
+
+            activeQuizMode = 'EVALUATION';
+            activeQuestionIndex = 0;
+            userAnswers = {};
+            quizTimeRemaining = 15 * 60; // 15 menit untuk 15 soal
+
+            document.getElementById('quiz-mode-selector').classList.add('hidden');
+            document.getElementById('quiz-runner').classList.remove('hidden');
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-type-tag').innerText = `MODE UJIAN: ${testType}-TEST (15 SOAL)`;
+
+            startQuizTimer();
+            renderQuizQuestion();
+        }
+
+        function startQuizTimer() {
+            clearInterval(quizTimerInterval);
+            updateTimerDisplay();
+            quizTimerInterval = setInterval(() => {
+                quizTimeRemaining--;
+                updateTimerDisplay();
+                if (quizTimeRemaining <= 0) {
+                    clearInterval(quizTimerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(quizTimeRemaining / 60).toString().padStart(2, '0');
+            const s = (quizTimeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('quiz-timer').innerText = `${m}:${s}`;
+        }
+
+        function renderQuizQuestion() {
+            const q = activeQuizQuestions[activeQuestionIndex];
+            document.getElementById('question-number-badge').innerText = `Soal ${activeQuestionIndex + 1} dari ${activeQuizQuestions.length}`;
+            document.getElementById('question-text').innerText = q.teks;
+
+            const progressPct = ((activeQuestionIndex + 1) / activeQuizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            const container = document.getElementById('quiz-options-container');
+            const selectedOpt = userAnswers[activeQuestionIndex];
+
+            container.innerHTML = ['A', 'B', 'C', 'D'].map(key => {
+                const isSelected = selectedOpt === key;
+                return `
+                    <div onclick="selectQuizOption('${key}')" class="p-4 rounded-2xl border ${isSelected ? 'border-brand-600 bg-brand-50 text-brand-900 font-bold' : 'border-slate-200 bg-white hover:border-slate-300'} cursor-pointer transition-all flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-xl ${isSelected ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-600'} flex items-center justify-center font-bold text-xs">${key}</span>
+                        <span class="text-xs sm:text-sm text-slate-700">${q.opsi[key]}</span>
+                    </div>
+                `;
+            }).join('');
+
+            const expBox = document.getElementById('quiz-explanation-box');
+            if (activeQuizMode === 'PRACTICE' && selectedOpt) {
+                expBox.classList.remove('hidden');
+                document.getElementById('quiz-explanation-text').innerText = q.pemb || 'Tidak ada pembahasan tambahan.';
+            } else {
+                expBox.classList.add('hidden');
+            }
+
+            document.getElementById('btn-quiz-prev').disabled = (activeQuestionIndex === 0);
+            const btnNext = document.getElementById('btn-quiz-next');
+            if (activeQuestionIndex === activeQuizQuestions.length - 1) {
+                btnNext.innerHTML = `<span>Selesai & Kumpulkan</span> <i class="fa-solid fa-check-circle"></i>`;
+            } else {
+                btnNext.innerHTML = `<span>Lanjut Soal</span> <i class="fa-solid fa-arrow-right"></i>`;
+            }
+        }
+
+        function selectQuizOption(optKey) {
+            userAnswers[activeQuestionIndex] = optKey;
+            renderQuizQuestion();
+        }
+
+        function quizPreviousQuestion() {
+            if (activeQuestionIndex > 0) {
+                activeQuestionIndex--;
+                renderQuizQuestion();
+            }
+        }
+
+        function quizNextQuestion() {
+            if (activeQuestionIndex < activeQuizQuestions.length - 1) {
+                activeQuestionIndex++;
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(quizTimerInterval);
+
+            let correctCount = 0;
+            activeQuizQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.kunci) {
+                    correctCount++;
+                }
+            });
+
+            const score = Math.round((correctCount / activeQuizQuestions.length) * 100);
+            const wrongCount = activeQuizQuestions.length - correctCount;
+
+            document.getElementById('quiz-runner').classList.add('hidden');
+            document.getElementById('quiz-result-screen').classList.remove('hidden');
+
+            document.getElementById('res-score').innerText = score;
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('res-wrong').innerText = wrongCount;
+            document.getElementById('res-date').innerText = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            if (score >= 75) {
+                document.getElementById('res-status-kkm').innerText = 'Status: Memenuhi KKM (>= 75)';
+                document.getElementById('res-status-kkm').className = 'text-xs text-emerald-300 font-bold';
+            } else {
+                document.getElementById('res-status-kkm').innerText = 'Status: Belum Memenuhi KKM (< 75)';
+                document.getElementById('res-status-kkm').className = 'text-xs text-rose-300 font-bold';
+            }
+
+            if (activeQuizMode === 'EVALUATION') {
+                const newSubmission = {
+                    nis: activeStudentData.nis,
+                    nama: activeStudentData.nama,
+                    testType: activeStudentData.testType,
+                    score: score,
+                    time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+                    date: new Date().toISOString().split('T')[0]
+                };
+                mockSubmissions.unshift(newSubmission);
+                saveAllDataToStorage();
+                renderTeacherTable();
+                initTeacherChart();
+            }
+        }
+
+        function resetToQuizModeSelector() {
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-runner').classList.add('hidden');
+            document.getElementById('quiz-mode-selector').classList.remove('hidden');
+        }
+
+        // CHART.JS NUMERASI PRE VS POST TEST
+        function initTeacherChart() {
+            const ctx = document.getElementById('teacher-chart-comparison');
+            if (!ctx) return;
+
+            if (teacherChartInstance) {
+                teacherChartInstance.destroy();
+            }
+
+            // Ambil sampel siswa untuk grafik pembanding
+            const studentsMap = {};
+            mockSubmissions.forEach(sub => {
+                if (!studentsMap[sub.nama]) {
+                    studentsMap[sub.nama] = { pre: 0, post: 0 };
+                }
+                if (sub.testType === 'PRE') studentsMap[sub.nama].pre = sub.score;
+                if (sub.testType === 'POST') studentsMap[sub.nama].post = sub.score;
+            });
+
+            const labels = Object.keys(studentsMap);
+            const preData = labels.map(l => studentsMap[l].pre);
+            const postData = labels.map(l => studentsMap[l].post);
+
+            teacherChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.length > 0 ? labels : ['Andi', 'Bunga', 'Citra', 'Dedi', 'Eka'],
+                    datasets: [
+                        {
+                            label: 'Pre-Test (15 Soal)',
+                            data: preData.length > 0 ? preData : [60, 53, 67, 53, 60],
+                            backgroundColor: '#f43f5e',
+                            borderRadius: 8
+                        },
+                        {
+                            label: 'Post-Test (15 Soal)',
+                            data: postData.length > 0 ? postData : [87, 93, 87, 80, 93],
+                            backgroundColor: '#10b981',
+                            borderRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
+            });
+        }
+
+        // TEACHER TABLE & STATS
+        function renderTeacherTable() {
+            const tbody = document.getElementById('teacher-table-body');
+            const searchVal = (document.getElementById('teacher-table-search')?.value || '').toLowerCase();
+
+            const filtered = mockSubmissions.filter(sub => {
+                return sub.nama.toLowerCase().includes(searchVal) || sub.nis.toLowerCase().includes(searchVal);
+            });
+
+            tbody.innerHTML = filtered.map(sub => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 font-mono font-bold">${sub.nis}</td>
+                    <td class="p-4 font-bold text-slate-800">${sub.nama}</td>
+                    <td class="p-4">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold ${sub.testType === 'PRE' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">
+                            ${sub.testType}-TEST
+                        </span>
+                    </td>
+                    <td class="p-4 font-black text-sm ${sub.score >= 75 ? 'text-emerald-600' : 'text-rose-600'}">${sub.score}</td>
+                    <td class="p-4">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${sub.score >= 75 ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'bg-rose-50 text-rose-600 border border-rose-200'}">
+                            ${sub.score >= 75 ? 'TUNTAS' : 'REMEDIAL'}
+                        </span>
+                    </td>
+                    <td class="p-4 text-slate-400">${sub.date} (${sub.time})</td>
+                </tr>
+            `).join('');
+        }
+
+        // ADMIN TABLES RENDER
+        function switchAdminTab(tab) {
+            document.getElementById('admin-tab-kosakata').classList.add('hidden');
+            document.getElementById('admin-tab-soal').classList.add('hidden');
+            document.getElementById('tab-btn-kosakata').className = 'font-bold text-sm text-slate-400 hover:text-slate-700 pb-2';
+            document.getElementById('tab-btn-soal').className = 'font-bold text-sm text-slate-400 hover:text-slate-700 pb-2';
+
+            if (tab === 'kosakata') {
+                document.getElementById('admin-tab-kosakata').classList.remove('hidden');
+                document.getElementById('tab-btn-kosakata').className = 'font-bold text-sm text-brand-600 border-b-2 border-brand-600 pb-2';
+            } else {
+                document.getElementById('admin-tab-soal').classList.remove('hidden');
+                document.getElementById('tab-btn-soal').className = 'font-bold text-sm text-brand-600 border-b-2 border-brand-600 pb-2';
+            }
+        }
+
+        function renderAdminTables() {
+            const kataBody = document.getElementById('admin-kosakata-body');
+            kataBody.innerHTML = mockKosakataList.map(item => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3">
+                        <img src="${item.gambar}" alt="" class="w-12 h-12 rounded-lg object-cover">
+                    </td>
+                    <td class="p-3 font-bold text-slate-800">${item.nama}</td>
+                    <td class="p-3"><span class="bg-blue-50 text-brand-700 px-2 py-1 rounded-md text-[10px] font-bold">${item.kategori}</span></td>
+                    <td class="p-3 text-slate-600 line-clamp-2">${item.arti}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteKosakata('${item.id}')" class="text-rose-500 hover:text-rose-700 p-2"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            const soalBody = document.getElementById('admin-soal-body');
+            const allSoal = [...mockSoalPreList, ...mockSoalPostList];
+            soalBody.innerHTML = allSoal.map(item => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${item.type === 'PRE' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}">${item.type}</span>
+                    </td>
+                    <td class="p-3 font-bold">${item.no}</td>
+                    <td class="p-3 text-slate-700 line-clamp-2">${item.teks}</td>
+                    <td class="p-3 font-bold text-brand-600">${item.kunci}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="deleteSoal('${item.id}', '${item.type}')" class="text-rose-500 hover:text-rose-700 p-2"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteKosakata(id) {
+            if (confirm('Hapus kosakata ini?')) {
+                mockKosakataList = mockKosakataList.filter(k => k.id !== id);
+                saveAllDataToStorage();
+                renderKamusGrid();
+                renderAdminTables();
+                updateStatisticsCounters();
+            }
+        }
+
+        function deleteSoal(id, type) {
+            if (confirm('Hapus soal ini?')) {
+                if (type === 'PRE') mockSoalPreList = mockSoalPreList.filter(s => s.id !== id);
+                else mockSoalPostList = mockSoalPostList.filter(s => s.id !== id);
+                saveAllDataToStorage();
+                renderAdminTables();
+                updateStatisticsCounters();
+            }
+        }
+
+        function updateStatisticsCounters() {
+            document.getElementById('stat-kosakata').innerText = mockKosakataList.length;
+            document.getElementById('stat-soal').innerText = mockSoalPreList.length + mockSoalPostList.length;
+        }
+
+        // MODAL TOGGLES
+        function openAddKosakataModal() {
+            document.getElementById('modal-add-kosakata').classList.remove('hidden');
+        }
+        function closeAddKosakataModal() {
+            document.getElementById('modal-add-kosakata').classList.add('hidden');
+        }
+        function openAddSoalModal() {
+            document.getElementById('modal-add-soal').classList.remove('hidden');
+        }
+        function closeAddSoalModal() {
+            document.getElementById('modal-add-soal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
